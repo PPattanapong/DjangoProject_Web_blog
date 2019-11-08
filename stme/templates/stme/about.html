@@ -1,0 +1,81 @@
+{% extends "stme/base.html" %}
+{% block content %}
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-sm-3 col-4" id="myScrollspy">
+        <div><br></div>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Section 1</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#section11">Link 1</a>
+            <a class="dropdown-item" href="#section12">Link 2</a>
+          </div>
+        </li>...<br>
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Section 2</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#section21">Link 1</a>
+            <a class="dropdown-item" href="#section22">Link 2</a>
+          </div>
+        </li>...<br>
+
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Section 3</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#section31">Link 1</a>
+            <a class="dropdown-item" href="#section32">Link 2</a>
+          </div>
+        </li>...<br>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Section 4</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#section41">Link 1</a>
+            <a class="dropdown-item" href="#section42">Link 2</a>
+          </div>
+        </li>...<br>
+      </ul>
+    </nav>
+    <div class="col-sm-9 col-8">
+        <div id="section11" class="">
+        <h2>Section -1</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+      <div id="section12" class="">
+        <h2>Section 2-2</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+        ...
+       <div id="section21" class="">
+        <h2>Section 2-1</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+      <div id="section22" class="">
+        <h2>Section 2-2</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+        ...
+      <div id="section31" class="">
+        <h2>Section 3-1</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+        <div id="section32" class="">
+        <h2>Section 3-2</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+        ...
+      <div id="section41" class="">
+        <h2>Section 4-1</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+      <div id="section42" class="">
+        <h2>Section 4-2</h2>
+        <p>Try to scroll this section and look at the navigation list while scrolling!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+{% endblock %}

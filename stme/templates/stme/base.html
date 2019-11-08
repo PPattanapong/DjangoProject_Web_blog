@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'stme/main.css' %}">
+    <!-- Font Awesome -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"> -->
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="{% static 'stme/MDB/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'stme/MDB/css/mdb.min.css' %}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{% static 'stme/MDB/css/style.css' %}" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    {% if title %}
+        <title> Django STMe - {{ title }}</title>
+    {% else %}
+        <title> Django STMe </title>
+    {% endif %}
+</head>
+<body>
+
+<header class="site-header ">
+  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <div class="container">
+      <a class="navbar-brand mr-4 " href="{% url 'stme-home' %}">Django STMe</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggle">
+        <div class="navbar-nav mr-auto">
+          <a class="nav-item nav-link" href="{% url 'stme-home' %}">Post</a>
+          <!--<a class="nav-item nav-link" href="{% url 'stme-about' %}">About</a> -->
+        </div>
+        <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+             <form class="form-inline my-2 my-lg-1">
+        <input
+            class="form-control mr-sm-2"
+            type="text"
+            placeholder="Search"
+            name='q'
+            value="{{request.get.q}}">
+                 <input class="btn btn btn-outline-dark my-2 my-sm-0" type="submit" value="search">
+      </form>
+
+          {% if user.is_authenticated %}
+                <!-- Example single danger button -->
+                <div class="btn-group">
+                    <span class="spinner-grow text-success"></span>
+                    <a type="button" class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <img class="account-img2" src="{{ user.profile.image.url }}">
+                    </a>
+                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Username: {{ user.username }} </a>
+                        <a class="dropdown-item" href="{% url 'post-create' %}">New Post</a>
+                        <a class="dropdown-item" href="{% url 'profile' %}">Edit Profile</a>
+                        <a class="dropdown-item" href="{% url 'password_change' %}">Reset Pass</a>
+                     <div class="dropdown-divider"></div>
+                       <a type="button" class="dropdown-item" data-toggle="modal" data-target="#myModal">Sign out</a>
+                  </div>
+                </div>
+          {% else %}
+              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<!-- Confirm Logout -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">  Sign out ? </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        You want to confirm Sign out ?
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'logout' %}">Confirm</a>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+    <!-- แสงด messages จากการสมัคร -->
+      {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+    <!-- end -->
+      {% block content %}{% endblock %}
+    </div>
+  {% if user.is_authenticated %}
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3><span class="badge badge-secondary">Profile </span> : {{ user.username }} </h3>
+             <img class="mx-auto d-block" src="{{ user.profile.image.url }}">
+              <ul class="list-group">
+              <p><br></p>
+                <p class="text-secondary">Name: {{ user.first_name }} {{ user.last_name}}</p>
+                <p class="text-secondary">Email: {{ user.email }}</p>
+              </ul>
+              <ul class="list-group">
+              <a class="btn btn-outline-secondary" href="{% url 'profile' %}"> Edit Profile </a>
+              </ul>
+            </p>
+          </div>
+          <div class="content-section">
+            <h3><span class="badge badge-success badge-dark">Create </span><span class="badge badge-success badge-info">Chapters !</span></h3>
+            <p class='text-muted'><span class="badge badge-pill badge-light">You can create articles here.</span>
+              <ul class="list-group">
+                    <a class="btn btn-outline-info blink-1" href="{% url 'post-create' %}">New Post</a>
+              </ul>
+            </p>
+          </div>
+        </div>
+    {% else %}
+              <div class="col-md-4">
+                 <div class="content-section">
+                  <h3><span class="badge badge-success badge-info">Please login !</span></h3>
+                  <p class='text-muted'>
+                      You can login to post, create articles, and comment.
+              <ul class="list-group">
+                  <a class="btn btn-outline-info" href="{% url 'post-create' %}">Login</a>
+              </ul>
+                <p class='text-muted'><span class="badge badge-pill badge-light">
+                    If you don't have an account You can apply <a href="{% url 'register' %}">here.</a>
+                    </span>
+                </p>
+            </p>
+          </div>
+        </div>
+   {% endif %}
+  </div>
+</main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+   <!-- <script type="text/javascript" src="{% static 'stme/MDB/js/jquery-3.4.1.min.js' %}"></script> -->
+      <!-- Bootstrap tooltips -->
+   <!-- <script type="text/javascript" src="{% static 'stme/MDB/js/popper.min.js' %}"></script> -->
+      <!-- Bootstrap core JavaScript -->
+  <!--  <script type="text/javascript" src="{% static 'stme/MDB/js/bootstrap.min.js' %}"></script> -->
+      <!-- MDB core JavaScript -->
+  <!--  <script type="text/javascript" src="{% static 'stme/MDB/js/mdb.min.js' %}"></script> -->
+
+</body>
+</html>

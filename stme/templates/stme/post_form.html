@@ -1,0 +1,44 @@
+{% extends "stme/base.html" %} <!-- ดึงรูปแบบ html จากไฟล์ base.html  -->
+{% load crispy_forms_tags %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stme/animista.css' %}">
+
+    <div class="content-section">
+            <form method="POST">
+                {% csrf_token%}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4"> DjangoSTMe Post </legend>
+                    {{ form|crispy}} <!-- ดึงรูปแบบ form ออกมาแสดง จัดหน้าแบบ crispy  -->
+                </fieldset>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal_post">
+                      Post
+                    </button>
+                <div class="modal" id="myModal_post">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+
+                      <!-- Modal Header -->
+
+                      <div class="modal-header">
+                        <h4 class="modal-title">Post</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        Do you want to post?
+                      </div>
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button class="btn btn-outline-info " type="submit"><span class="spinner-grow spinner-grow-sm"></span>Confirm<span class="spinner-grow spinner-grow-sm"></span></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </form>
+    </div>
+{% endblock %}
